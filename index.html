@@ -4,19 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do List</title>
+    <title>Advanced To-Do List</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <div class="head">
-        <h1>To-Do List</h1>
+        <h1>Advanced To-Do List</h1>
         <button id="add-task">Add new task</button>
     </div>
     <div>
         <form action="" id="form" style="display:none">
             <label for="task-name">Task Name</label>
-            <input type="text" id="task-name" name="task-name"required>
+            <input type="text" id="task-name" name="task-name" required>
             <label for="category">Category</label>
             <select name="category" id="category">
                 <option value="work">Work</option>
@@ -30,26 +30,35 @@
                 <option value="high">High</option>
             </select>
             <button id="add">Add</button>
-
         </form>
     </div>
+
+    <div class="controls">
+        <input type="text" id="search" placeholder="Search tasks by name">
+        <select id="filter">
+            <option value="all">All</option>
+            <option value="work">Work</option>
+            <option value="personal">Personal</option>
+            <option value="shopping">Shopping</option>
+            <option value="low">Low Priority</option>
+            <option value="medium">Medium Priority</option>
+            <option value="high">High Priority</option>
+        </select>
+    </div>
+
     <table>
         <thead>
             <tr>
                 <th>Task</th>
                 <th>Category</th>
                 <th>Priority</th>
-              </tr>
-        </thead>
-        <tbody>
-            <tr>
-
+                <th>Actions</th>
             </tr>
-
-        </tbody>
+        </thead>
+        <tbody></tbody>
     </table>
-    <script src="script.js"></script>
 
+    <script src="script.js"></script>
 </body>
 
 </html>
