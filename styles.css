@@ -26,7 +26,6 @@ body::before {
     z-index: -1;
 }
 
-/* Header styling */
 .head {
     text-align: center;
     margin-bottom: 20px;
@@ -52,7 +51,6 @@ body::before {
     background-color: #45a049;
 }
 
-/* Form styling */
 #form {
     background: white;
     border: 1px solid #ccc;
@@ -92,7 +90,6 @@ body::before {
     background-color: #45a049;
 }
 
-/* Table styling */
 table {
     width: 100%;
     max-width: 600px;
@@ -131,7 +128,6 @@ tbody td {
     text-align: center;
 }
 
-/* Controls styling */
 .controls {
     display: flex;
     gap: 10px;
@@ -166,7 +162,6 @@ tbody td {
     border-color: #4CAF50;
 }
 
-/* Buttons styling within tasks */
 button {
     margin: 5px;
     padding: 5px 10px;
@@ -201,12 +196,10 @@ button.update-btn {
    
 }
 
-/* Styling for editing rows */
 .editing-row {
-    background-color: #f0f8ff; /* Light blue background for clarity */
+    background-color: #f0f8ff;
 }
 
-/* Styling for input and select fields in edit mode */
 .edit-input, .edit-select {
     padding: 10px;
     font-size: 14px;
@@ -220,7 +213,6 @@ button.update-btn {
     display:flex;
 }
 
-/* Save and Cancel button styling */
 .save-btn, .cancel-btn {
     padding: 5px 10px;
     font-size: 14px;
@@ -233,24 +225,24 @@ button.update-btn {
 }
 
 .save-btn {
-    background-color: #4CAF50; /* Green for Save */
+    background-color: #4CAF50;
 }
 
 .cancel-btn {
-    background-color: #F44336; /* Red for Cancel */
+    background-color: #F44336;
 }
 
 .save-btn:hover, .cancel-btn:hover {
-    opacity: 0.9; /* Subtle hover effect */
+    opacity: 0.9;
 }
+
 @media (max-width: 768px) {
     table {
-        /* width: 100%; */
         max-width: 95%;
         font-size: 0.9rem;
         margin:20px auto;
     }
-    /* Adjust controls layout */
+    
     .controls {
         flex-direction: column;
         align-items: stretch;
@@ -266,7 +258,7 @@ button.update-btn {
 @media (max-width: 480px) {
 
     table {
-        max-width: 90%; /* Take full width of the screen */
+        max-width: 90%;
         margin: 20px auto;
         font-size: 0.7rem; /* Reduce font size for smaller screens */ 
     }
