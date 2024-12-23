@@ -1,10 +1,22 @@
+/**
+ * Get the "Add Task" button and attach a click event listener to display the form.
+ */
 const addTask = document.getElementById('add-task');
 addTask.addEventListener('click', () => {
     document.getElementById("form").style.display = "block";
 });
 
+/**
+ * Retrieve tasks from localStorage or initialize an empty array if no tasks exist.
+ */
 const taskArray = JSON.parse(localStorage.getItem('tasks')) || [];
 
+/**
+ * Task Constructor
+ * @param {string} taskName - The name of the task.
+ * @param {string} Category - The category of the task (e.g., work, personal, shopping).
+ * @param {string} Priority - The priority of the task (low, medium, high).
+ */
 function Task(taskName, Category, Priority) {
     this.taskName = taskName;
     this.Category = Category;
@@ -12,11 +24,15 @@ function Task(taskName, Category, Priority) {
     this.completed = false;
 }
 
+/**
+ * Get the "Add" button and attach a click event listener to add tasks.
+ */
 const btnAdd = document.getElementById('add');
 btnAdd.addEventListener('click', (event) => {
     event.preventDefault();
     const formData = new FormData(form);
     if (validate(formData)) {
+        //Create a new task, add it to the array and update the localstorage
         const task = new Task(formData.get('task-name'), formData.get('category'), formData.get('priority'));
         taskArray.push(task);
         localStorage.setItem('tasks', JSON.stringify(taskArray));
@@ -26,10 +42,16 @@ btnAdd.addEventListener('click', (event) => {
     }
 });
 
+/**
+ * Display tasks in the table.
+ * @param {string} filter - Filter criteria ("all", category, or priority).
+ * @param {string} search - Search term for filtering tasks by name.
+ */
 function displayTasks(filter = "all", search = "") {
     const tbody = document.querySelector('tbody');
     tbody.innerHTML = "";
 
+    // Filter and iterate through tasks to display them.
     taskArray
         .filter(task =>
             (filter === "all" || task.Category === filter || task.Priority === filter) &&
@@ -37,7 +59,7 @@ function displayTasks(filter = "all", search = "") {
         )
         .forEach((task, index) => {
             const row = document.createElement('tr');
-            row.setAttribute('draggable', true);
+            row.setAttribute('draggable', true); // Enable drag-and-drop.
             row.innerHTML = `
                 <td>${task.taskName}</td>
                 <td>${task.Category}</td>
@@ -70,6 +92,7 @@ function displayTasks(filter = "all", search = "") {
                 row.style.textDecoration = "line-through";
 
             }
+             // Enable task editing
             row.querySelector('.update-btn').addEventListener('click', () => {
                 const task = taskArray[index]; // Get the task object for the current row
 
@@ -144,6 +167,7 @@ function displayTasks(filter = "all", search = "") {
                 e.preventDefault();
                 const draggedIndex = e.dataTransfer.getData('text/plain');
                 const droppedIndex = index;
+                // Swap the positions of dragged and dropped tasks
                 [taskArray[draggedIndex], taskArray[droppedIndex]] = [taskArray[droppedIndex], taskArray[draggedIndex]];
                 localStorage.setItem('tasks', JSON.stringify(taskArray));
                 displayTasks(filter, search);
@@ -151,6 +175,10 @@ function displayTasks(filter = "all", search = "") {
         });
 }
 
+/**
+ * Remove a task from the task array and localStorage.
+ * @param {Object} taskToRemove - The task object to remove.
+ */
 function removeTaskFromStorage(taskToRemove) {
     const index = taskArray.findIndex(task =>
         task.taskName === taskToRemove.taskName &&
@@ -163,6 +191,11 @@ function removeTaskFromStorage(taskToRemove) {
     }
 }
 
+/**
+ * Validate form data to ensure required fields are filled.
+ * @param {FormData} formData - The form data to validate.
+ * @returns {boolean} - True if valid, false otherwise.
+ */
 function validate(formData) {
     if (
         formData.get('task-name') === "" ||
@@ -175,15 +208,15 @@ function validate(formData) {
     return true;
 }
 
-// Filter Tasks
+// Filter tasks based on the selected category or priority.
 document.getElementById('filter').addEventListener('change', (e) => {
     displayTasks(e.target.value, document.getElementById('search').value);
 });
 
-// Search Tasks
+// Search Tasks by name
 document.getElementById('search').addEventListener('input', (e) => {
     displayTasks(document.getElementById('filter').value, e.target.value);
 });
 
-// Initial Rendering
+// Initial Rendering of tasks
 displayTasks();
