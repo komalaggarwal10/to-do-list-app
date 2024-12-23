@@ -1,7 +1,5 @@
-/* General styles */
 * {
     margin: 0;
-    padding: 0;
     box-sizing: border-box;
     font-family: 'Arial', sans-serif;
 }
@@ -9,11 +7,9 @@
 body {
     background: url('images/background.jpg') no-repeat center center fixed;
     background-size: cover;
-    color: #333;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
     min-height: 100vh;
     padding: 20px;
     position: relative;
@@ -45,7 +41,6 @@ body::before {
 #add-task {
     background-color: #4CAF50;
     color: white;
-    border: none;
     padding: 10px 20px;
     font-size: 1rem;
     border-radius: 5px;
@@ -81,13 +76,11 @@ body::before {
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    outline: none;
 }
 
 #form button {
     background-color: #4CAF50;
     color: white;
-    border: none;
     padding: 10px;
     font-size: 1rem;
     border-radius: 5px;
@@ -121,7 +114,6 @@ thead th {
 
 tbody tr {
     border-bottom: 1px solid #ddd;
-    cursor: grab;
 }
 
 tbody tr:nth-child(even) {
@@ -137,10 +129,6 @@ tbody tr:nth-child(even):hover {
 tbody td {
     padding: 15px;
     text-align: center;
-}
-
-tbody tr:active {
-    cursor: grabbing;
 }
 
 /* Controls styling */
@@ -194,6 +182,7 @@ button.done-btn {
     color: white;
 }
 
+
 button.done-btn:hover {
     background-color: #45a049;
 }
@@ -205,4 +194,90 @@ button.delete-btn {
 
 button.delete-btn:hover {
     background-color: #d32f2f;
+}
+button.update-btn {
+    background-color: lightskyblue;
+    color: black;
+   
+}
+
+/* Styling for editing rows */
+.editing-row {
+    background-color: #f0f8ff; /* Light blue background for clarity */
+}
+
+/* Styling for input and select fields in edit mode */
+.edit-input, .edit-select {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+.action-btn{
+    display: flex;
+}
+.edit-btn{
+    display:flex;
+}
+
+/* Save and Cancel button styling */
+.save-btn, .cancel-btn {
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.save-btn {
+    background-color: #4CAF50; /* Green for Save */
+}
+
+.cancel-btn {
+    background-color: #F44336; /* Red for Cancel */
+}
+
+.save-btn:hover, .cancel-btn:hover {
+    opacity: 0.9; /* Subtle hover effect */
+}
+@media (max-width: 768px) {
+    table {
+        /* width: 100%; */
+        max-width: 95%;
+        font-size: 0.9rem;
+        margin:20px auto;
+    }
+    /* Adjust controls layout */
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #search, #filter {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+/* Adjusting for mobile screens (max-width: 480px) */
+@media (max-width: 480px) {
+
+    table {
+        max-width: 90%; /* Take full width of the screen */
+        margin: 20px auto;
+        font-size: 0.7rem; /* Reduce font size for smaller screens */ 
+    }
+    thead th, tbody td {
+        padding: 8px; 
+        text-align: left; 
+    }
+
+    .controls {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
 }
