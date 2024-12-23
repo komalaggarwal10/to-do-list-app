@@ -31,7 +31,7 @@ function displayTasks(filter = "all", search = "") {
     tbody.innerHTML = "";
 
     taskArray
-        .filter(task => 
+        .filter(task =>
             (filter === "all" || task.Category === filter || task.Priority === filter) &&
             task.taskName.toLowerCase().includes(search.toLowerCase())
         )
@@ -43,11 +43,15 @@ function displayTasks(filter = "all", search = "") {
                 <td>${task.Category}</td>
                 <td>${task.Priority}</td>
                 <td>
-                    <button class="done-btn">${task.completed ? "Undo" : "Done"}</button>
-                    <button class="delete-btn">Delete</button>
+                <div class="action-btn">
+                    <button class="done-btn">${task.completed ? "&#10006" : "&#10004"}</button>
+                    <button class="delete-btn fa fa-trash-o"></button>
+                    <button class="update-btn fa fa-edit"></button>
+                    </div>
+                
                 </td>
             `;
-            
+
             // Mark as Done/Undo
             row.querySelector('.done-btn').addEventListener('click', () => {
                 task.completed = !task.completed;
@@ -62,10 +66,71 @@ function displayTasks(filter = "all", search = "") {
             });
 
             // Apply strikethrough for completed tasks
-            if (task.completed){
+            if (task.completed) {
                 row.style.textDecoration = "line-through";
-                
-            } 
+
+            }
+            row.querySelector('.update-btn').addEventListener('click', () => {
+                const task = taskArray[index]; // Get the task object for the current row
+
+                // Apply styling to the entire row for edit mode
+                row.classList.add('editing-row');
+
+                // Replace cells with input fields/dropdowns for inline editing
+                row.cells[0].innerHTML = `<input type='text' value='${task.taskName}' class='edit-input' />`;
+                row.cells[1].innerHTML = `
+        <select class='edit-select'>
+            <option value="work" ${task.Category === "work" ? "selected" : ""}>Work</option>
+            <option value="personal" ${task.Category === "personal" ? "selected" : ""}>Personal</option>
+            <option value="shopping" ${task.Category === "shopping" ? "selected" : ""}>Shopping</option>
+        </select>`;
+                row.cells[2].innerHTML = `
+        <select class='edit-select'>
+            <option value="low" ${task.Priority === "low" ? "selected" : ""}>Low</option>
+            <option value="medium" ${task.Priority === "medium" ? "selected" : ""}>Medium</option>
+            <option value="high" ${task.Priority === "high" ? "selected" : ""}>High</option>
+        </select>`;
+
+                // Replace update button with save and cancel buttons
+                const actionsCell = row.querySelector('td:last-child');
+                actionsCell.innerHTML = `
+                <div class="edit-btn">
+        <button class="save-btn">Save</button>
+        <button class="cancel-btn">Cancel</button>
+        </div>
+    `;
+
+                // Handle Save
+                actionsCell.querySelector('.save-btn').addEventListener('click', () => {
+                    const updatedTaskName = row.cells[0].querySelector('input').value.trim();
+                    const updatedCategory = row.cells[1].querySelector('select').value;
+                    const updatedPriority = row.cells[2].querySelector('select').value;
+
+                    if (!updatedTaskName) {
+                        alert('Task Name is required!');
+                        return;
+                    }
+
+                    // Update the task in the array
+                    task.taskName = updatedTaskName;
+                    task.Category = updatedCategory;
+                    task.Priority = updatedPriority;
+
+                    // Save updated tasks to local storage
+                    localStorage.setItem('tasks', JSON.stringify(taskArray));
+
+                    // Re-render the table to reflect changes
+                    displayTasks(filter, search);
+                });
+
+                // Handle Cancel
+                actionsCell.querySelector('.cancel-btn').addEventListener('click', () => {
+                    // Revert changes by re-rendering the tasks
+                    displayTasks(filter, search);
+                });
+
+
+            })
             tbody.appendChild(row);
 
             // Drag-and-Drop Handlers
@@ -87,7 +152,7 @@ function displayTasks(filter = "all", search = "") {
 }
 
 function removeTaskFromStorage(taskToRemove) {
-    const index = taskArray.findIndex(task => 
+    const index = taskArray.findIndex(task =>
         task.taskName === taskToRemove.taskName &&
         task.Category === taskToRemove.Category &&
         task.Priority === taskToRemove.Priority
